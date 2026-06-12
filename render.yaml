@@ -12,29 +12,26 @@ services:
   - type: web
     name: ai-agent
     runtime: python
-    region: singapore         # Chọn region gần user nhất
-    plan: free                # free | starter | standard | pro
+    region: singapore
+    plan: free
 
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn app:app --host 0.0.0.0 --port $PORT
 
-    healthCheckPath: /health   # Render check path này
-
-    autoDeploy: true           # Auto deploy khi push to GitHub
-    ipAllowList: []        # Nếu muốn giới hạn IP truy cập, thêm vào đây (ví dụ: ["
+    healthCheckPath: /health
+    autoDeploy: true
+    ipAllowList: []
 
     envVars:
       - key: ENVIRONMENT
         value: production
       - key: PYTHON_VERSION
         value: 3.11.0
-      # Secrets — set qua Render Dashboard (không commit giá trị thật)
       - key: OPENAI_API_KEY
-        sync: false            # sync: false = set thủ công trên dashboard
+        sync: false
       - key: AGENT_API_KEY
-        generateValue: true    # Render tự sinh random value
+        generateValue: true
 
-    # Disk (nếu agent cần lưu file)
     # disk:
     #   name: agent-data
     #   mountPath: /data
@@ -47,6 +44,7 @@ services:
     name: agent-cache
     plan: free
     maxmemoryPolicy: allkeys-lru
+    ipAllowList: []
 
 # ============================================================
 # Cách deploy:
