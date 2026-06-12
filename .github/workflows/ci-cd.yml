@@ -7,7 +7,7 @@ on:
     branches: [ main, master ]
 
 env:
-  RAILWAY_DOCKERFILE: backend/Dockerfile
+  RAILWAY_DOCKERFILE: Day06-C401-TeamE4/backend/Dockerfile
 
 jobs:
   # ────────────────────────────────────────────
@@ -17,6 +17,10 @@ jobs:
     name: Backend CI - Test
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: Day06-C401-TeamE4
+
     steps:
       - uses: actions/checkout@v4
 
@@ -25,6 +29,7 @@ jobs:
         with:
           python-version: "3.11"
           cache: "pip"
+          cache-dependency-path: Day06-C401-TeamE4/backend/requirements.txt
 
       - name: Install dependencies
         run: |
@@ -48,7 +53,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: codebase/frontend
+        working-directory: Day06-C401-TeamE4/codebase/frontend
 
     steps:
       - uses: actions/checkout@v4
@@ -58,7 +63,7 @@ jobs:
         with:
           node-version: "20"
           cache: "npm"
-          cache-dependency-path: codebase/frontend/package-lock.json
+          cache-dependency-path: Day06-C401-TeamE4/codebase/frontend/package-lock.json
 
       - name: Install dependencies
         run: npm ci
@@ -78,6 +83,10 @@ jobs:
     if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: Day06-C401-TeamE4
+
     steps:
       - uses: actions/checkout@v4
 
@@ -88,7 +97,6 @@ jobs:
         run: railway up --service moni-agent
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-        working-directory: .
 
   # ────────────────────────────────────────────
   # FRONTEND CD — Deploy to Vercel
@@ -101,7 +109,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: codebase/frontend
+        working-directory: Day06-C401-TeamE4/codebase/frontend
 
     steps:
       - uses: actions/checkout@v4
