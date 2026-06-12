@@ -21,6 +21,7 @@ services:
     healthCheckPath: /health   # Render check path này
 
     autoDeploy: true           # Auto deploy khi push to GitHub
+    ipAllowList: []        # Nếu muốn giới hạn IP truy cập, thêm vào đây (ví dụ: ["
 
     envVars:
       - key: ENVIRONMENT
