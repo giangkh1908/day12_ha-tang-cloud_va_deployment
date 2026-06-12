@@ -403,8 +403,11 @@ curl -X POST https://moni-ai-production.up.railway.app/agent \
 ### Frontend (Vercel)
 **URL:** https://frontend-two-jade-74.vercel.app
 
-> ⚠️ Cần set `VITE_API_URL = https://moni-ai-production.up.railway.app` trong Vercel Dashboard (Settings → Environment Variables) → Redeploy để frontend gọi được backend.
+### Backend (Railway)
+**URL:** https://moni-ai-production.up.railway.app
 
+> ⚠️ Cần set `VITE_API_URL = https://moni-ai-production.up.railway.app` trong Vercel Dashboard (Settings → Environment Variables) → Redeploy để frontend gọi được backend.
+> ⚠️ Cần set key OpenAI 
 ### CI/CD
 - **File:** `.github/workflows/ci-cd.yml`
 - **Trigger:** Push/RP vào `main`
