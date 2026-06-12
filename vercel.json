@@ -1,5 +1,4 @@
 {
-  "rootDirectory": "Day06-C401-TeamE4/codebase/frontend",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "framework": "vite",
