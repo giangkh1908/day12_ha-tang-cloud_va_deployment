@@ -2,7 +2,7 @@
 // Switch USE_MOCK to false when backend is ready
 
 const USE_MOCK = false;
-const API_BASE_URL = import.meta.env.VITE_API_URL || '';
+const API_BASE_URL = (import.meta.env.VITE_API_URL || '').replace(/\/+$/, '');
 
 // ==================== MOCK DATA ====================
 const MOCK_RESPONSES = [
