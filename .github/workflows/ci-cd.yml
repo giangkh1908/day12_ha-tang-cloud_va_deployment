@@ -7,7 +7,7 @@ on:
     branches: [ main, master ]
 
 env:
-  RAILWAY_DOCKERFILE: backend/Dockerfile
+  RAILWAY_DOCKERFILE: Day06-C401-TeamE4/backend/Dockerfile
 
 jobs:
   # ────────────────────────────────────────────
@@ -83,10 +83,6 @@ jobs:
     if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: Day06-C401-TeamE4
-
     steps:
       - uses: actions/checkout@v4
 
@@ -94,7 +90,7 @@ jobs:
         run: npm install -g @railway/cli
 
       - name: Deploy to Railway
-        run: railway up --service moni-ai --dockerfile backend/Dockerfile
+        run: railway up --service moni-ai
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
 
