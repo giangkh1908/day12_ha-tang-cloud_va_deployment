@@ -7,7 +7,7 @@ on:
     branches: [ main, master ]
 
 env:
-  RAILWAY_DOCKERFILE: Day06-C401-TeamE4/backend/Dockerfile
+  RAILWAY_DOCKERFILE: Day06-C401-TeamE4/Dockerfile
 
 jobs:
   # ────────────────────────────────────────────
