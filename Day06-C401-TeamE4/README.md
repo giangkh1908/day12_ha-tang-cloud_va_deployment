@@ -31,4 +31,41 @@ Repo gồm 2 phần chính:
 - `spec/`: hướng dẫn form SPEC của bài
 - `codebase/`: toàn bộ code prototype frontend và backend
 
+---
+
+## Production Deployment
+
+### Backend API (Railway)
+
+**URL:** https://moni-ai-production.up.railway.app
+
+**Endpoints:**
+
+| Method | Endpoint | Mô tả |
+|--------|----------|-------|
+| GET | `/health` | Health check |
+| GET | `/ready` | Readiness probe |
+| GET | `/` | Thông tin app |
+| POST | `/agent` | Chat với Moni AI Agent |
+| POST | `/llm` | Gọi LLM trực tiếp |
+| POST | `/save-plan` | Lưu kế hoạch tiết kiệm |
+
+**Test:**
+```bash
+curl https://moni-ai-production.up.railway.app/health
+curl -X POST https://moni-ai-production.up.railway.app/agent \
+  -H "Content-Type: application/json" \
+  -d '{"prompt": "Số dư của tôi là bao nhiêu?", "max_steps": 5}'
+```
+
+### Frontend (Vercel)
+
+**URL:** https://moni-agent.vercel.app
+
+### CI/CD
+
+GitHub Actions tự động:
+- **Backend:** Test → Deploy lên Railway
+- **Frontend:** Test → Build → Deploy lên Vercel
+
 

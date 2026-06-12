@@ -437,3 +437,48 @@ curl -H "X-API-Key: dev-key-change-me" http://localhost:8000/ask -X POST ^
   -H "Content-Type: application/json" -d '{"question":"Hello"}'
 python check_production_ready.py
 ```
+
+---
+
+## 🚀 Moni Agent — Production Deployment
+
+### Backend API (Railway)
+**URL:** https://moni-ai-production.up.railway.app
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/` | GET | App info |
+| `/health` | GET | Health check |
+| `/ready` | GET | Readiness probe |
+| `/metrics` | GET | Metrics (requires API Key) |
+| `/agent` | POST | Chat with Moni AI Agent |
+| `/llm` | POST | Direct LLM call |
+| `/save-plan` | POST | Save saving plan |
+
+**Test:**
+```bash
+curl https://moni-ai-production.up.railway.app/health
+
+curl -X POST https://moni-ai-production.up.railway.app/agent \
+  -H "Content-Type: application/json" \
+  -d '{"prompt": "Số dư của tôi là bao nhiêu?", "max_steps": 5}'
+```
+
+### Frontend (Vercel)
+**URL:** https://frontend-two-jade-74.vercel.app
+
+> ⚠️ Cần set `VITE_API_URL = https://moni-ai-production.up.railway.app` trong Vercel Dashboard (Settings → Environment Variables) → Redeploy để frontend gọi được backend.
+
+### CI/CD
+- **File:** `.github/workflows/ci-cd.yml`
+- **Trigger:** Push/RP vào `main`
+- **Backend:** Test → `railway up` deploy
+- **Frontend:** Build → `vercel deploy --prod`
+- **Secrets cần set:** `RAILWAY_TOKEN`, `VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`
+
+### Kiến trúc Production
+```
+User → Vercel (React) → API proxy → Railway (FastAPI)
+                                        └→ ReAct Agent → OpenAI LLM
+                                                       → Finance Tools
+```
