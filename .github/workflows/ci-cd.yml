@@ -94,7 +94,7 @@ jobs:
         run: npm install -g @railway/cli
 
       - name: Deploy to Railway
-        run: railway up --service moni-agent
+        run: railway up --service moni-ai
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
 
