@@ -323,62 +323,7 @@ Kết quả: Dù mỗi request được serve bởi instance khác nhau, convers
 
 ---
 
-## Part 6: Final Project — Production AI Agent (`06-lab-complete/`)
 
-### Architecture
-
-```
-Client → POST /ask [X-API-Key header]
-    ↓
-app/main.py
-    ├─ Config: app/config.py (env vars)
-    ├─ Auth: X-API-Key header
-    ├─ Rate Limit: in-memory sliding window (20 req/min)
-    ├─ Cost Guard: daily budget $5.00
-    ├─ Health: GET /health + GET /ready
-    ├─ Logging: JSON structured (event, method, path, status, ms)
-    ├─ Graceful shutdown: SIGTERM handler
-    └─ Security headers: X-Content-Type-Options, X-Frame-Options
-```
-
-### Production Checklist
-
-| Feature | Status | Implementation |
-|---------|--------|---------------|
-| Config từ env | ✅ | `app/config.py` dùng Pydantic-style dataclass + os.getenv |
-| Structured JSON logging | ✅ | `logging.basicConfig` với format JSON, `json.dumps` trong mỗi log |
-| API Key authentication | ✅ | `APIKeyHeader` + `verify_api_key` dependency |
-| Rate limiting (20 req/min) | ✅ | Sliding window với deque, per API key bucket |
-| Cost guard ($5/day) | ✅ | Track `_daily_cost`, reset theo ngày, raise 503 khi hết |
-| Input validation | ✅ | Pydantic `AskRequest` model, min_length=1, max_length=2000 |
-| Health check (`/health`) | ✅ | Trả về status, uptime, version, total_requests, checks |
-| Readiness probe (`/ready`) | ✅ | Trả về 200 nếu `_is_ready`, 503 nếu chưa |
-| Graceful shutdown (SIGTERM) | ✅ | `signal.signal(SIGTERM)`, log event |
-| Security headers | ✅ | Middleware: X-Content-Type-Options, X-Frame-Options, xóa Server header |
-| CORS | ✅ | Configurable allowed_origins từ env |
-| Docker multi-stage | ✅ | builder → runtime, < 500 MB |
-| Non-root user | ✅ | `groupadd` + `useradd`, `USER agent` |
-| HEALTHCHECK instruction | ✅ | Docker native health check, interval 30s |
-| docker-compose.yml | ✅ | agent + redis services |
-| .dockerignore | ✅ | Exclude .env, __pycache__, .git, *.md |
-| Deployment config | ✅ | railway.toml + render.yaml |
-
-### Validation Script
-
-```bash
-cd 06-lab-complete
-python check_production_ready.py
-```
-
-Script kiểm tra:
-- Dockerfile tồn tại và valid (multi-stage, non-root, HEALTHCHECK)
-- .dockerignore, .env.example tồn tại
-- Các endpoint: /health, /ready
-- Authentication, rate limiting
-- Graceful shutdown (SIGTERM handler)
-- Structured logging (JSON format)
-
----
 
 ## Tổng kết
 
@@ -430,15 +375,6 @@ cd 05-scaling-reliability/production
 docker compose up --scale agent=3
 python test_stateless.py
 
-# Part 6 — Full production stack
-cd 06-lab-complete
-docker compose up
-curl -H "X-API-Key: dev-key-change-me" http://localhost:8000/ask -X POST ^
-  -H "Content-Type: application/json" -d '{"question":"Hello"}'
-python check_production_ready.py
-```
-
----
 
 ## 🚀 Moni Agent — Production Deployment
 
