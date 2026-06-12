@@ -1,0 +1,65 @@
+/* ===== Feedback Bar ===== */
+.feedback-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+  padding: var(--spacing-sm) 0 var(--spacing-xs);
+  animation: msgFadeIn 0.3s ease-out;
+}
+
+.feedback-bar__label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+.feedback-bar__actions {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.feedback-bar__btn {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  transition: all var(--transition-fast);
+}
+
+.feedback-bar__btn:not(:disabled):hover {
+  border-color: rgba(99, 102, 241, 0.3);
+  color: var(--color-icon-hover);
+  background: rgba(99, 102, 241, 0.04);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.feedback-bar__btn:not(:disabled):active {
+  transform: translateY(0);
+}
+
+.feedback-bar__btn:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+
+.feedback-bar__btn--active-yes {
+  background: rgba(34, 197, 94, 0.1) !important;
+  border-color: rgba(34, 197, 94, 0.4) !important;
+  color: #16a34a !important;
+  opacity: 1 !important;
+}
+
+.feedback-bar__btn--active-no {
+  background: rgba(239, 68, 68, 0.1) !important;
+  border-color: rgba(239, 68, 68, 0.4) !important;
+  color: #dc2626 !important;
+  opacity: 1 !important;
+}

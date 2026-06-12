@@ -1,0 +1,9 @@
+/* ===== App Layout ===== */
+.app {
+  width: 100%;
+  max-width: 430px;
+  height: 100dvh;
+  position: relative;
+  overflow: hidden;
+  background-color: var(--color-bg);
+}

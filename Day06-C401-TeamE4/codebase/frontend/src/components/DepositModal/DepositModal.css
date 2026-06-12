@@ -1,0 +1,165 @@
+/* ============================================
+   DepositModal – MoMo Premium Style
+   ============================================ */
+
+.deposit-modal__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: depositOverlayIn 0.2s ease-out;
+}
+
+@keyframes depositOverlayIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.deposit-modal {
+  background: #ffffff;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 360px;
+  padding: 24px 20px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  animation: depositModalSlideUp 0.3s ease-out;
+}
+
+@keyframes depositModalSlideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.deposit-modal__header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.deposit-modal__icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.deposit-modal__title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1a1a2e;
+}
+
+.deposit-modal__plan-name {
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 2px;
+}
+
+.deposit-modal__form-group {
+  margin-bottom: 16px;
+}
+
+.deposit-modal__label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: #6b7280;
+  margin-bottom: 6px;
+}
+
+.deposit-modal__input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #ec4899;
+  background: #fdf2f8;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.deposit-modal__input:focus {
+  outline: none;
+  border-color: #f472b6;
+  box-shadow: 0 0 0 3px rgba(244, 114, 182, 0.15);
+}
+
+.deposit-modal__input::placeholder {
+  color: #d1d5db;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.deposit-modal__input--note {
+  font-size: 14px;
+  font-weight: 400;
+  color: #1a1a2e;
+  background: #f9fafb;
+}
+
+.deposit-modal__hint {
+  font-size: 11px;
+  color: #9ca3af;
+  margin-top: 4px;
+}
+
+.deposit-modal__btn-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.deposit-modal__btn {
+  flex: 1;
+  padding: 12px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.deposit-modal__btn--primary {
+  border: none;
+  background: linear-gradient(135deg, #f472b6, #ec4899);
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(236, 72, 153, 0.3);
+}
+
+.deposit-modal__btn--primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(236, 72, 153, 0.45);
+}
+
+.deposit-modal__btn--primary:disabled {
+  background: #e5e7eb;
+  color: #9ca3af;
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.deposit-modal__btn--secondary {
+  background: #f9fafb;
+  color: #6b7280;
+  border: 1px solid #e5e7eb;
+}
+
+.deposit-modal__btn--secondary:hover {
+  background: #f3f4f6;
+}

@@ -1,0 +1,106 @@
+/* ===== Chat Input Wrapper ===== */
+.chat-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md) var(--spacing-md) var(--spacing-lg);
+  position: relative;
+  z-index: 10;
+}
+
+/* History button */
+.chat-input__history-btn {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-icon);
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-fast);
+}
+
+.chat-input__history-btn:hover {
+  color: var(--color-icon-hover);
+  border-color: rgba(99, 102, 241, 0.2);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.chat-input__history-btn:active {
+  transform: translateY(0);
+}
+
+/* Input form */
+.chat-input {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  background: var(--color-white);
+  border-radius: var(--radius-full);
+  padding: var(--spacing-sm) var(--spacing-md);
+  box-shadow: var(--shadow-input);
+  border: 1px solid var(--color-border);
+  min-height: 48px;
+  transition: all var(--transition-fast);
+}
+
+.chat-input:focus-within {
+  border-color: rgba(192, 132, 252, 0.4);
+  box-shadow: var(--shadow-input), 0 0 0 3px rgba(192, 132, 252, 0.08);
+}
+
+.chat-input__sparkle-icon {
+  flex-shrink: 0;
+  font-size: var(--font-size-lg);
+  line-height: 1;
+}
+
+.chat-input__field {
+  flex: 1;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  min-width: 0;
+}
+
+.chat-input__field::placeholder {
+  color: var(--color-text-placeholder);
+  font-weight: 400;
+}
+
+/* Send button */
+.chat-input__send-btn {
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-white);
+  background: var(--gradient-pink);
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all var(--transition-normal);
+  pointer-events: none;
+}
+
+.chat-input__send-btn:not(:disabled) {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+.chat-input__send-btn:not(:disabled):hover {
+  box-shadow: 0 4px 16px rgba(192, 132, 252, 0.4);
+  transform: scale(1.05);
+}
+
+.chat-input__send-btn:not(:disabled):active {
+  transform: scale(0.95);
+}

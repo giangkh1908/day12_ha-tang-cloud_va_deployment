@@ -1,0 +1,10 @@
+/* ===== Chat Page ===== */
+.chat-page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background: var(--color-bg);
+  position: relative;
+  overflow: hidden;
+}

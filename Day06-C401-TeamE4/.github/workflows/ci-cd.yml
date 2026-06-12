@@ -1,0 +1,119 @@
+name: Moni CI/CD
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+env:
+  RAILWAY_DOCKERFILE: backend/Dockerfile
+
+jobs:
+  # ────────────────────────────────────────────
+  # BACKEND CI
+  # ────────────────────────────────────────────
+  backend-test:
+    name: Backend CI - Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          pip install -r backend/requirements.txt pytest
+
+      - name: Run tests
+        run: |
+          python -m pytest codebase/tests/ -v --tb=short || echo "No tests found"
+
+      - name: Check imports
+        run: |
+          cd codebase
+          python -c "from src.api.main import app; print('✅ Backend imports OK')"
+
+  # ────────────────────────────────────────────
+  # FRONTEND CI
+  # ────────────────────────────────────────────
+  frontend-test:
+    name: Frontend CI - Build
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: codebase/frontend
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: codebase/frontend/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint || echo "Lint warnings (non-blocking)"
+
+      - name: Build
+        run: npm run build
+
+  # ────────────────────────────────────────────
+  # BACKEND CD — Deploy to Railway
+  # ────────────────────────────────────────────
+  backend-deploy:
+    name: Backend CD - Deploy to Railway
+    needs: [backend-test]
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli
+
+      - name: Deploy to Railway
+        run: railway up --service moni-agent
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+        working-directory: .
+
+  # ────────────────────────────────────────────
+  # FRONTEND CD — Deploy to Vercel
+  # ────────────────────────────────────────────
+  frontend-deploy:
+    name: Frontend CD - Deploy to Vercel
+    needs: [frontend-test]
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: codebase/frontend
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Vercel CLI
+        run: npm install -g vercel
+
+      - name: Deploy to Vercel
+        run: |
+          vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+          vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+          vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}

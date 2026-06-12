@@ -1,0 +1,119 @@
+/* ===== Chat Area ===== */
+.chat-area {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow-y: auto;
+  padding: var(--spacing-lg);
+}
+
+.chat-area--has-messages {
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+/* Scrollbar styling */
+.chat-area::-webkit-scrollbar {
+  width: 4px;
+}
+
+.chat-area::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chat-area::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: var(--radius-full);
+}
+
+/* Background gradient decorations */
+.chat-area__bg-decor {
+  position: fixed;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(80px);
+  opacity: 0.6;
+  z-index: 0;
+}
+
+.chat-area__bg-decor--right {
+  bottom: -60px;
+  right: -60px;
+  background: radial-gradient(
+    circle,
+    rgba(251, 191, 146, 0.35) 0%,
+    rgba(249, 168, 212, 0.2) 50%,
+    transparent 70%
+  );
+}
+
+.chat-area__bg-decor--left {
+  bottom: -40px;
+  left: -80px;
+  background: radial-gradient(
+    circle,
+    rgba(249, 168, 212, 0.25) 0%,
+    transparent 60%
+  );
+}
+
+/* Welcome content */
+.chat-area__welcome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-lg);
+  z-index: 1;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.chat-area__greeting {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  text-align: center;
+  color: var(--color-text-primary);
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+}
+
+/* Messages list */
+.chat-area__messages {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  width: 100%;
+  z-index: 1;
+  padding-bottom: var(--spacing-md);
+}
+
+/* Message group */
+.chat-area__message-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+/* Timestamp */
+.chat-area__timestamp {
+  text-align: center;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  padding: var(--spacing-sm) 0;
+  font-weight: 500;
+}
+
+/* ===== Animations ===== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
